@@ -26,11 +26,17 @@ For **novel or multi-system work only**: work spanning multiple layers together,
 ### `scope-fence` — do what was asked, flag what you found
 Fires on any modification of existing work. The requested change and its genuine requirements are in scope; everything else noticed along the way is flagged ("Noticed, NOT touched: …"), never silently fixed. Gray-zone tests: would X break without the extra edit (in scope); is it "while I'm here" (out); formatting churn on untouched lines (revert).
 
+### `verify` — green tests are evidence, not proof
+Fires after a change to product behaviour, before it's called done. Names the observable outcome first ("if this works, then X"), then drives the real path — runs the command, hits the endpoint, loads the view, calls the function with representative inputs — and reads the actual result instead of assuming it. Typecheck-green and suite-green prove the covered cases still hold; they're blind to the gap between what was built and what was asked, which one real run closes. Not for changes with no runtime surface (docs, comments, pure test-only edits) or pure questions.
+
 ### `ruthless-editor` — every sentence earns its place
 Fires on public-facing/persistent prose: docs, READMEs, PR bodies, reports. A separate cutting pass after drafting — per-sentence tests (needed to act? repeated? hedging? abstract-where-concrete-possible?), structural cuts (lead with outcome, kill throat-clearing), target ~30% shorter with zero information loss, with explicit guards against over-compression (clarity outranks brevity). Not for code, commit messages, or routine chat replies.
 
 ### `memory-hygiene` — memory is a claim about the past
 Fires when reading or writing persistent agent memory (`CLAUDE.md`, rules, skills, this file). Write side: persist decisions-with-why, corrections received, non-obvious constraints, user preferences; never what code/git already records; prune when adding; put each fact in the right tier. Recall side: grade staleness (system state ages fast, decisions slowly); fast-aging fact + consequential action → verify against live state first; live state wins disagreements and the memory gets fixed in the same breath.
+
+### `memory-store` — keep long-term memory out of the always-on file
+Companion to `memory-hygiene` for when durable facts outgrow `CLAUDE.md`. `memory-hygiene` decides WHAT to persist and the recall rule; this decides WHERE and in WHAT SHAPE once there's enough to need structure: a `memory/` store with a one-line-per-fact index (`MEMORY.md`, loaded every session) plus one file per fact carrying typed frontmatter (`decision`/`correction`/`constraint`/`preference`/`reference`) and `[[links]]`, each loaded only on demand. Keeps the always-on index flat no matter how many facts exist, and retires a wrong fact by deleting one file. Not for facts that apply every session (`CLAUDE.md`) or file-scoped detail (a path-scoped rule).
 
 ### `pr-changelog` — the PR is the public changelog *(example — delete if you don't publish PR bodies)*
 Worked example of a domain-specific skill built on the generic ones. Fires on every PR title/body write, assuming merges auto-publish somewhere public. Audience-facing voice, present tense, area-sectioned bodies leading with user impact, one honest line for chores, and hard bans on attribution/AI mentions/internal links/secrets. Ends with a mandatory `ruthless-editor` pass. Adapt the placeholders (`<publish target>`, `<audience>`) or delete entirely if you have no such pipeline.

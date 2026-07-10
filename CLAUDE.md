@@ -59,7 +59,7 @@ If any part of the repo is machine-generated and gitignored (a bundled build, a 
 
 ## 10) Agent Best Practices
 - Keep changes minimal and scoped; no unrelated refactors — skill **`scope-fence`** (flag adjacent issues, don't fix them). Update tests alongside logic changes.
-- **Skills** (`.claude/skills/`, auto-trigger by description; full inventory in **`SKILLS.md`**): `plan-gate` (novel/multi-system work), `scope-fence`, `memory-hygiene` (editing this file/rules), `ruthless-editor` (public-facing prose), `pr-changelog` (if you publish a changelog). Path-scoped rules live in `.claude/rules/`.
+- **Skills** (`.claude/skills/`, auto-trigger by description; full inventory in **`SKILLS.md`**): `plan-gate` (novel/multi-system work), `scope-fence`, `verify` (prove a behaviour change works by driving it, not just green tests), `memory-hygiene` (editing this file/rules), `memory-store` (when durable facts outgrow this file), `ruthless-editor` (public-facing prose), `pr-changelog` (if you publish a changelog). Path-scoped rules live in `.claude/rules/`.
 - **Comments: write very few.** Only for a non-obvious invariant/constraint the code can't express. Never narrate what code does, restate the change, or explain reasoning in comments — they cost tokens on every future read and go stale.
 - Edit source of truth in `<source dirs>`; generated output follows from build scripts. Never commit generated artifacts.
 - Direct user/developer/system instructions outrank this file. Update this guide in the same change when it goes stale.
